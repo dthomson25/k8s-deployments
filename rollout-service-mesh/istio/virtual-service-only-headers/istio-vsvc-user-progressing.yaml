@@ -1,0 +1,43 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: guestbook-vsvc-only-weight
+spec:
+  hosts:
+  - guestbook-vsvc-only-weight.com
+  http:
+  - name: rewrite
+    match:
+    - uri:
+        prefix: "/test"
+    rewrite:
+      uri: "/"
+    route:
+    - destination:
+        host: guestbook-stable
+  - name: primary
+    route:
+    - destination:
+        host: guestbook-stable
+    # Below managed by Rollout
+      weight: 100
+    - destination:
+        host: guestbook-canary
+      weight: 0
+  - name: rewrite-canary
+    match:
+    - uri:
+        prefix: "/test"
+      headers:
+        end-user:
+          exact: jason
+    rewrite:
+      uri: "/"
+    route:
+    - destination:
+        host: guestbook-canary
+      weight: 100
+    # May not be necessary
+    - destination:
+      host: guestbook-stable
+    weight: 0

@@ -1,0 +1,13 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: guestbook-dr
+spec:
+  host: guestbook-svc
+  subnet:
+  - name: canary
+    labels:
+      pod-hash: abc123 # Managed by Rollout
+  - name: stable 
+    labels:
+      pod-hash: xyz987 # Managed by Rollout

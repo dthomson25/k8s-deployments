@@ -1,0 +1,17 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: guestbook-vsvc-only-weight
+spec:
+  hosts:
+  - guestbook-vsvc-only-weight.com
+  http:
+  - name: primary
+    route:
+    - destination:
+        host: guestbook-stable
+      # Below added by Rollout
+      weight: 99
+    - destination:
+        host: guestbook-canary
+      weight: 1

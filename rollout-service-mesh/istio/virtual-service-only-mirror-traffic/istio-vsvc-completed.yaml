@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: guestbook-vsvc-with-headers
+spec:
+  hosts:
+  -  guestbook-vsvc-with-headers.com
+  http:
+  - name: primary
+    route:
+    - destination:
+        host: guestbook-stable
+    # Below managed by Rollout
+    mirror:
+      host: guestbook-canary
+    mirror_percent: 0
