@@ -3,10 +3,11 @@ kind: VirtualService
 metadata:
   name: istio-rollout-vsvc
 spec:
+  gateways:
+    - istio-rollout-gateway
   hosts:
-  - istio-rollout.dev.argoproj.io
+    - istio-rollout.dev.argoproj.io
   http:
-  - name: primary 
-    route:
-    - destination:
-        host: stable-svc
+    - route:
+        - destination:
+            host: stable-svc
