@@ -1,19 +1,19 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: guestbook-vsvc-with-dr
+  name: istio-rollout-vsvc
 spec:
+  gateways:
+    - istio-rollout-gateway
   hosts:
-  - guestbook-vsvc-with-dr.com
+    - istio-rollout.dev.argoproj.io
   http:
-  - name: test
-    route:
-    - destination:
-        host: guestbook-svc
-    # Managed by Rollout
-        subnet: stable
-      weight: 99
-    - destination:
-        host: guestbook-svc
-        subnet: canary
-      weight: 1
+    - route:
+      - destination:
+          host: stable-svc
+          subnet: stableSubnet
+        weight: 100
+      - destination:
+          host: stable-svc
+          subnet: canarySubnet
+        weight: 0

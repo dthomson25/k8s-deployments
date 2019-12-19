@@ -9,5 +9,9 @@ spec:
     - istio-rollout.dev.argoproj.io
   http:
     - route:
-        - destination:
-            host: stable-svc
+      - destination:
+          host: stable-svc
+        weight: 100
+      - destination:
+          host: canary-svc
+        weight: 0
