@@ -14,15 +14,15 @@ spec:
       uri: "/"
     route:
     - destination:
-        host: guestbook-stable
+        host: stable-svc
   - name: primary
     route:
     - destination:
-        host: guestbook-stable
+        host: stable-svc
     # Below managed by Rollout
       weight: 100
     - destination:
-        host: guestbook-canary
+        host: canary-svc
       weight: 0
   - name: rewrite-canary
     match:
@@ -35,9 +35,4 @@ spec:
       uri: "/"
     route:
     - destination:
-        host: guestbook-canary
-      weight: 100
-    # May not be necessary
-    - destination:
-      host: guestbook-stable
-    weight: 0
+        host: canary-svc

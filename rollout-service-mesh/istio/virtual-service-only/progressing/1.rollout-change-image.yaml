@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: istio-rollout
-        image: argoproj/rollouts-demo:blue
+        image: argoproj/rollouts-demo:yellow
         imagePullPolicy: Always
         ports:
         - name: http
@@ -31,7 +31,6 @@ spec:
       stableService: stable-svc
       steps:
       - setWeight: 1
-      - pause: {}
       networking:
         istio:
           virtualService:

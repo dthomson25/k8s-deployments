@@ -1,20 +1,20 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
-  name: canary-demo
+  name: istio-rollout
 spec:
   replicas: 5
   revisionHistoryLimit: 1
   selector:
     matchLabels:
-      app: canary-demo
+      app: istio-rollout
   template:
     metadata:
       labels:
-        app: canary-demo
+        app: istio-rollout
     spec:
       containers:
-      - name: canary-demo
+      - name: istio-rollout
         image: argoproj/rollouts-demo:blue
         imagePullPolicy: Always
         ports:
@@ -27,13 +27,13 @@ spec:
             cpu: 5m
   strategy:
     canary:
-      canaryService: guestbook-canary
-      stableService: guestbook-stable
+      canaryService: canary-svc
+      stableService: stable-svc
       steps:
       - setHeader: 
           canaryReplicas: 1 
           istio:
-            routeName: unique-routing
+            routeName: rewrite
             match:
             - headers:
                 end-user:
@@ -41,6 +41,10 @@ spec:
       networking:
         istio:
           virtualService:
-            name: guestbook-vsvc-with-headers
+            name: istio-rollout-vsvc
+            routes:
+            - primary
+            
+
             
         

@@ -1,10 +1,12 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: guestbook-vsvc-only-weight
+  name: istio-rollout-vsvc
 spec:
+  gateways:
+    - istio-rollout-gateway
   hosts:
-  - guestbook-vsvc-only-weight.com
+    - istio-rollout.dev.argoproj.io
   http:
   - name: rewrite
     match:
@@ -14,8 +16,13 @@ spec:
       uri: "/"
     route:
     - destination:
-        host: guestbook-stable
+        host: stable-svc
+      weight: 100 #optional
   - name: primary
     route:
     - destination:
-        host: guestbook-stable
+        host: stable-svc
+      weight: 100
+    - destination:
+        host: canary-svc
+      weight: 0

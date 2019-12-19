@@ -8,4 +8,4 @@ spec:
     port: 80
     targetPort: http
   selector:
-    app: istio-demo
+    app: istio-rollout

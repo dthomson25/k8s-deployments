@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: canary-svc
+  name: stable-svc
 spec:
   ports:
   - name: http
@@ -9,3 +9,4 @@ spec:
     targetPort: http
   selector:
     app: istio-rollout
+    rollouts-pod-template-hash: 797445fbb7
