@@ -8,7 +8,8 @@ spec:
   hosts:
     - istio-rollout.dev.argoproj.io
   http:
-    - route:
+    - name: primary
+      route:
       - destination:
           host: stable-svc
         weight: 100
