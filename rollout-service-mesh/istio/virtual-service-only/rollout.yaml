@@ -32,7 +32,7 @@ spec:
       steps:
       - setWeight: 1
       - pause: {}
-      networking:
+      trafficRouting:
         istio:
           virtualService:
             name: istio-rollout-vsvc
