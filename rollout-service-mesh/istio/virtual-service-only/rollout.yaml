@@ -27,8 +27,6 @@ spec:
             cpu: 5m
   strategy:
     canary:
-      analysis:
-        templateName: success-rate
       canaryService: canary-svc
       stableService: stable-svc
       steps:
