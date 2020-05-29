@@ -30,7 +30,7 @@ spec:
       canaryService: canary-svc
       stableService: stable-svc
       steps:
-      - setWeight: 1
+      - setWeight: 10
       - pause: {}
       trafficRouting:
         istio:
